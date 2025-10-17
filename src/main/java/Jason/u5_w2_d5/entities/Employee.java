@@ -21,4 +21,8 @@ public class Employee {
     private String surname;
     private String email;
 
+    // URL dell'immagine profilo (opzionale)
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
 }
