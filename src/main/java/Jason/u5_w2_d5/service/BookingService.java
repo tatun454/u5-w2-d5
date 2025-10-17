@@ -4,6 +4,7 @@ import Jason.u5_w2_d5.entities.Booking;
 import Jason.u5_w2_d5.entities.Employee;
 import Jason.u5_w2_d5.entities.Trip;
 import Jason.u5_w2_d5.exceptions.BadRequestException;
+import Jason.u5_w2_d5.exceptions.NotFoundException;
 import Jason.u5_w2_d5.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,6 @@ public class BookingService {
     }
 
     public Booking findById(Long id) {
-        return bookingRepository.findById(id).orElseThrow(() -> new BadRequestException("Booking not found"));
+        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Booking not found"));
     }
 }
-

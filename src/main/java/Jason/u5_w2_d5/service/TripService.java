@@ -25,5 +25,17 @@ public class TripService {
     public List<Trip> findAll() {
         return tripRepository.findAll();
     }
-}
 
+    public Trip findByIdAndUpdate(Long id, Trip body) {
+        Trip existing = findById(id);
+        existing.setDestination(body.getDestination());
+        existing.setDate(body.getDate());
+        existing.setStatus(body.getStatus());
+        return tripRepository.save(existing);
+    }
+
+    public void findByIdAndDelete(Long id) {
+        Trip existing = findById(id);
+        tripRepository.delete(existing);
+    }
+}

@@ -25,5 +25,18 @@ public class EmployeeService {
     public List<Employee> findAll() {
         return employeeRepository.findAll();
     }
-}
 
+    public Employee findByIdAndUpdate(Long id, Employee body) {
+        Employee existing = findById(id);
+        existing.setUsername(body.getUsername());
+        existing.setName(body.getName());
+        existing.setSurname(body.getSurname());
+        existing.setEmail(body.getEmail());
+        return employeeRepository.save(existing);
+    }
+
+    public void findByIdAndDelete(Long id) {
+        Employee existing = findById(id);
+        employeeRepository.delete(existing);
+    }
+}
