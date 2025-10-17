@@ -1,4 +1,4 @@
-package Jason.u5_w2_d5.exceptions;
+package Jason.u5_w2_d5.payloads.errors;
 
 import java.time.LocalDateTime;
 import java.util.List;

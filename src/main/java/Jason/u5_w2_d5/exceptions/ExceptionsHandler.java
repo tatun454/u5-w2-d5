@@ -1,5 +1,6 @@
 package Jason.u5_w2_d5.exceptions;
 
+import Jason.u5_w2_d5.payloads.errors.ErrorsPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

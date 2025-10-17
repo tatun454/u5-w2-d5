@@ -2,8 +2,8 @@ package Jason.u5_w2_d5.controllers;
 
 import Jason.u5_w2_d5.entities.Booking;
 import Jason.u5_w2_d5.exceptions.BadRequestException;
-import Jason.u5_w2_d5.payloads.NewBookingPayload;
-import Jason.u5_w2_d5.payloads.NewBookingResponseDTO;
+import Jason.u5_w2_d5.payloads.booking.NewBookingPayload;
+import Jason.u5_w2_d5.payloads.booking.NewBookingResponseDTO;
 import Jason.u5_w2_d5.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
