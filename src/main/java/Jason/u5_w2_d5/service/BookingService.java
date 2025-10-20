@@ -24,11 +24,12 @@ public class BookingService {
     @Autowired
     private TripService tripService;
 
+    // Crea una prenotazione: valida employee/trip, evita duplicati per data
     public Booking createBooking(Long tripId, Long employeeId, LocalDate bookingDate, String notes, String preferences) {
         Employee employee = employeeService.findById(employeeId);
         Trip trip = tripService.findById(tripId);
 
-
+        // Controlla se esiste già una prenotazione per lo stesso dipendente e data
         boolean exists = bookingRepository.existsByEmployeeAndBookingDate(employee, bookingDate);
         if (exists) {
             throw new BadRequestException("Employee already has a booking for this date");
@@ -44,9 +45,11 @@ public class BookingService {
         return bookingRepository.save(b);
     }
 
+
     public List<Booking> findAll() {
         return bookingRepository.findAll();
     }
+
 
     public Booking findById(Long id) {
         return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Booking not found"));

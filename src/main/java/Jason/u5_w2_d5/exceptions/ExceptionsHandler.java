@@ -21,6 +21,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsPayloadWithList handleBadRequest(BadRequestException e) {
+        // Converte BadRequestException in ErrorsPayloadWithList
         List<String> errorsMessages = new ArrayList<>();
         if (e.getErrorsList() != null)
             errorsMessages = e.getErrorsList().stream().map(err -> err.getDefaultMessage()).toList();
@@ -30,6 +31,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsPayloadWithList handleValidation(MethodArgumentNotValidException e) {
+        // Converte errori di validazione in ErrorsPayloadWithList
         List<String> errors = e.getBindingResult().getAllErrors().stream().map(org.springframework.validation.ObjectError::getDefaultMessage).toList();
         return new ErrorsPayloadWithList("Validation error", new Date(), errors);
     }
@@ -37,12 +39,14 @@ public class ExceptionsHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorsPayload handleNotFound(NotFoundException e) {
+        // Converte NotFoundException in ErrorsPayload
         return new ErrorsPayload(e.getMessage(), LocalDateTime.now());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsPayload handleGeneric(Exception e) {
+        // Log dell'errore e risposta generica 500
         e.printStackTrace();
         return new ErrorsPayload("General Error. please wait...", LocalDateTime.now());
     }

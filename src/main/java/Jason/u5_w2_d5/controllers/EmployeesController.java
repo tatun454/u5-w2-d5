@@ -62,19 +62,23 @@ public class EmployeesController {
 
     @PostMapping(path = "/{id}/avatar", consumes = {"multipart/form-data"})
     public Employee uploadAvatar(@PathVariable Long id, @RequestPart("file") MultipartFile file) {
+        // Verifica presenza file
         if (file == null || file.isEmpty()) {
             throw new BadRequestException("File mancante");
         }
+        // Verifica tipo:(immagine)
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
             throw new BadRequestException("Tipo file non supportato: è richiesta un'immagine");
         }
+        // Verifica dimensione massima 5MB
         long maxSize = 5L * 1024L * 1024L; // 5MB
         if (file.getSize() > maxSize) {
             throw new BadRequestException("File troppo grande. Massimo 5MB");
         }
 
         try {
+            // Upload su Cloudinary e recupero URL
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             Object urlObj = uploadResult.get("secure_url");
             if (urlObj == null) {
@@ -85,6 +89,7 @@ public class EmployeesController {
             existing.setAvatarUrl(url);
             return employeeService.save(existing);
         } catch (Exception e) {
+            // Rappresenta errore di upload
             throw new BadRequestException("Impossibile caricare l'immagine: " + e.getMessage());
         }
     }

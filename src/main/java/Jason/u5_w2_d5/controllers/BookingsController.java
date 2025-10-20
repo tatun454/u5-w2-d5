@@ -21,12 +21,14 @@ public class BookingsController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public NewBookingResponseDTO createBooking(@RequestBody @Valid NewBookingPayload body) {
+        // Mappa payload, chiama service che valida e crea la prenotazione; ritorna DTO con id
         Booking b = bookingService.createBooking(body.getTripId(), body.getEmployeeId(), body.getBookingDate(), body.getNotes(), body.getPreferences());
         return new NewBookingResponseDTO(b.getId());
     }
 
     @GetMapping("")
     public List<Booking> getAll() {
+
         return bookingService.findAll();
     }
 

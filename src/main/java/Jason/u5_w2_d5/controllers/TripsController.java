@@ -30,6 +30,7 @@ public class TripsController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public NewTripResponseDTO createTrip(@RequestBody @Valid NewTripPayload body) {
+        // Mappa payload, crea entità e salva
         Trip t = new Trip();
         t.setDestination(body.getDestination());
         t.setDate(body.getDate());
@@ -50,18 +51,21 @@ public class TripsController {
 
     @PutMapping("/{id}")
     public Trip updateTrip(@PathVariable Long id, @RequestBody Trip body) {
+        // Aggiorna trip tramite service
         return tripService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrip(@PathVariable Long id) {
+        // Verifica esistenza e cancella
         tripService.findByIdAndDelete(id);
     }
 
     // Endpoint per aggiornare solo lo status del viaggio
     @PatchMapping("/{id}/status")
     public Trip updateStatus(@PathVariable Long id, @RequestParam TripStatus status) {
+        // Cambia lo status e salva
         Trip existing = tripService.findById(id);
         existing.setStatus(status);
         return tripService.save(existing);
@@ -71,6 +75,7 @@ public class TripsController {
     @PostMapping("/{id}/assign")
     @ResponseStatus(HttpStatus.CREATED)
     public NewBookingResponseDTO assignEmployee(@PathVariable Long id, @RequestBody @Valid AssignEmployeePayload body) {
+        // Crea booking tramite service e restituisce id
         var b = bookingService.createBooking(id, body.getEmployeeId(), body.getBookingDate(), body.getNotes(), body.getPreferences());
         return new NewBookingResponseDTO(b.getId());
     }
